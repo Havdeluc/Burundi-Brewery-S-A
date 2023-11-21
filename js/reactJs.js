@@ -15,15 +15,16 @@ async function postData(url = '', data = {}) {
 }
 
 async function fetchData(url = '') {
-    return await fetch(`${systemBaseUrl}/${url}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }).then(response => response.json()).catch((e) => {
-        console.log(e);
-        return {};
-    });
+    return {}
+   // return await fetch(`${systemBaseUrl}/${url}`, {
+  //      method: 'GET',
+   //     headers: {
+   //         'Content-Type': 'application/json',
+   //     }
+   // }).then(response => response.json()).catch((e) => {
+   //     console.log(e);
+   //     return {};
+  //  });
 }
 
 async function postDataWithFiles({ url = '', data = new FormData() }) {
@@ -154,7 +155,6 @@ function Gallery({ events = [] }) {
 }
 
 function ImagesDisplayer({ images = [] }) {
-    console.log(images);
 
     const [currentImage, setCurrentImage] = React.useState(0);
 
@@ -791,19 +791,18 @@ function Staff({ members = [] }) {
     </div> : <></>
 }
 
-function Covers({ covers = [] }) {
+function Covers({ covers = undefined }) {
 
-    const coversOfficial = covers?.length ? covers : [
-        "https://brewerystorage.s3.af-south-1.amazonaws.com/bdi_burundi_brewery_02_2020_akezanet.jpeg",
-        "https://brewerystorage.s3.af-south-1.amazonaws.com/DSC_0461.jpg",
-        "https://brewerystorage.s3.af-south-1.amazonaws.com/Ngozieco1.jpg.png",
-        "https://brewerystorage.s3.af-south-1.amazonaws.com/Bbrew2.JPG",
-        "https://brewerystorage.s3.af-south-1.amazonaws.com/Cuves+Brew2.JPG",
+    const coversOfficial = covers ?? [
+        "../assets/Ngozieco1.jpg.png",
+        "../assets/bdi_burundi_brewery_02_2020_akezanet.jpeg",
+        "../assets/338026326_203453539052971_8476777654635275942_n.jpg"
     ].map((e) => {
         return { link: e }
     });
 
     let slideIndex = 0;
+
 
     function showSlides() {
         let i;
@@ -822,6 +821,8 @@ function Covers({ covers = [] }) {
             showSlides();
         }
     }, []);
+
+    console.log(coversOfficial)
 
     return coversOfficial.length ? <div className="slideshow-container" style={{
         backgroundImage: `url(${coversOfficial[0].link})`,
@@ -1181,15 +1182,16 @@ function ReactCompRender(id, component) {
 fetchData('blog/view').then((response) => {
     console.log('Theee', response);
     const { cover, group_image, member, product } = response;
+    const dummProducts = []
     ReactCompRender('products', <Products products={product} />);
-    ReactCompRender('products-alizer', <ProductsList products={product} />);
-    ReactCompRender('products-footer', <ProductsListFooter products={product} />);
+    ReactCompRender('products-alizer', <ProductsList products={dummProducts} />);
+    ReactCompRender('products-footer', <ProductsListFooter products={dummProducts} />);
     ReactCompRender('staff', <Staff members={member} />);
     ReactCompRender('media', <Gallery events={group_image} />);
-    ReactCompRender('slide-from', <Covers covers={cover} />);
+    //ReactCompRender('slide-from', <Covers covers={cover} />);
 })
 
-
+ReactCompRender('slide-from', <Covers />);
 ReactCompRender('newsLetterForm', <SubscribeToNewsLetter />);
 ReactCompRender('contact-us-form', <ContactUsForm />);
 ReactCompRender('jobs', <Jobs />);
