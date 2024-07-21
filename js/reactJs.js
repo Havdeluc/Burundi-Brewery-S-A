@@ -813,7 +813,7 @@ function Covers({ covers = undefined }) {
         slideIndex++;
         if (slideIndex > slides.length) { 
             slideIndex = 1;
-            slides[slideIndex - 1]?.style.display = "block";
+            slides[slideIndex - 1].style.display = "block";
             setTimeout(showSlides, 5000); // Change image every 2 seconds 
         }
 
@@ -1185,10 +1185,10 @@ function ReactCompRender(id, component) {
 fetchData('blog/view').then((response) => {
     console.log('Theee', response);
     const { cover, group_image, member, product } = response;
-    const dummProducts = []
+    console.log("RESPONSE",response.product)
     ReactCompRender('products', <Products products={product} />);
-    ReactCompRender('products-alizer', <ProductsList products={dummProducts} />);
-    ReactCompRender('products-footer', <ProductsListFooter products={dummProducts} />);
+    ReactCompRender('products-alizer', <ProductsList products={product} />);
+    ReactCompRender('products-footer', <ProductsListFooter products={product} />);
     ReactCompRender('staff', <Staff members={member} />);
     ReactCompRender('media', <Gallery events={group_image} />);
     ReactCompRender('slide-from', <Covers covers={cover} />);
