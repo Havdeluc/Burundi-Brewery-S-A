@@ -15,16 +15,16 @@ async function postData(url = '', data = {}) {
 }
 
 async function fetchData(url = '') {
-    return {}
-   // return await fetch(`${systemBaseUrl}/${url}`, {
-  //      method: 'GET',
-   //     headers: {
-   //         'Content-Type': 'application/json',
-   //     }
-   // }).then(response => response.json()).catch((e) => {
-   //     console.log(e);
-   //     return {};
-  //  });
+   // return {}
+    return await fetch(`${systemBaseUrl}/${url}`, {
+        method: 'GET',
+       headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => response.json()).catch((e) => {
+        console.log(e);
+        return {};
+    });
 }
 
 async function postDataWithFiles({ url = '', data = new FormData() }) {
@@ -1188,7 +1188,7 @@ fetchData('blog/view').then((response) => {
     ReactCompRender('products-footer', <ProductsListFooter products={dummProducts} />);
     ReactCompRender('staff', <Staff members={member} />);
     ReactCompRender('media', <Gallery events={group_image} />);
-    //ReactCompRender('slide-from', <Covers covers={cover} />);
+    ReactCompRender('slide-from', <Covers covers={cover} />);
 })
 
 ReactCompRender('slide-from', <Covers />);
